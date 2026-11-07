@@ -114,6 +114,24 @@ describe('isTrustedApiRequest', () => {
     expect(isTrustedApiRequest(request({ host: 'localhost:3080', 'sec-fetch-site': 'same-origin' }), [])).toBe(true)
   })
 
+  it('accepts a same-origin loopback request when a forwarding proxy drops the Origin port', () => {
+    const forwarded = {
+      host: '127.0.0.1:3082',
+      origin: 'http://127.0.0.1',
+      'sec-fetch-site': 'same-origin',
+    }
+    expect(isTrustedApiRequest(request(forwarded), [])).toBe(true)
+    expect(isTrustedApiRequest(request({
+      host: forwarded.host,
+      origin: forwarded.origin,
+    }), [])).toBe(false)
+    expect(isTrustedApiRequest(request({
+      host: 'harness.internal:3082',
+      origin: 'http://harness.internal',
+      'sec-fetch-site': 'same-origin',
+    }), ['harness.internal'])).toBe(false)
+  })
+
   it('reads Fetch Headers while preserving absent browser markers', () => {
     expect(isTrustedApiRequest({ headers: new Headers({ host: '127.0.0.1:3080' }) }, [])).toBe(true)
     expect(isTrustedApiRequest({

@@ -1,0 +1,5 @@
+- insert:
+    - id: disk-space
+      name: dsh-disk-space-plugin
+      config:
+        path: '/home/dengxiao.cs/code_repos'

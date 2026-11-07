@@ -1,0 +1,43 @@
+{
+  // Beginner view: keep the Cordis, boot, Agent, Session, Tools, and LLM paths.
+  // Set an entry to false when that category needs to be visible again.
+  // VS Code search inherits files.exclude, so the rules stay in one place.
+  "files.exclude": {
+    // Duplicate translations, tests, generated output, and package-local noise.
+    "**/*.zh.md": true,
+    "**/*.i18n.{yaml,yml,json}": true,
+    "{packages,vendor}/**/{test,tests,__tests__,fixtures,snapshot,snapshots,benchmarks}/**": true,
+    "{packages,vendor}/**/*.{test,spec,e2e}.{js,jsx,ts,tsx,mjs,cjs}": true,
+    "{packages,vendor}/**/{test_*.py,*_test.py,*_test.go}": true,
+    "**/{node_modules,coverage,dist,lib,.dist,.generated,.dsh-build,.dsh-report,.artifacts,.cache,tmp}/**": true,
+    "**/{locale,skills}/**": true,
+    "{packages,vendor}/**/tsconfig*.json": true,
+    "{packages,vendor}/**/tsdown.config.ts": true,
+    "**/*.tsbuildinfo": true,
+
+    // Product surfaces and maintenance infrastructure outside the learning path.
+    // The two locally developed scratch plugins remain visible.
+    "{.agents,.claude,.github,apps,benchmarks,native,patches,python,reports,scripts,snapshots,website}/**": true,
+    ".trae-html-share-packages/**": true,
+
+    // Keep only boot, bundle, core, llm, and preset package groups.
+    "packages/{acp,api,attachment,browser-use,client,compaction,computer-use,context,credentials,deliverables,document,experimental,extensions,feedback,fs,goal,guard,host,identity,interaction,jobs,lsp,mcp,plan,ptc-runtime,sandbox,schedule,sdk,session,session-query,settings,shell,skill,spill,ssh,storage,subagent,subprocess,telemetry,terminal,test-support,todo,typert,util,web,workflow,workspace}/**": true,
+    "packages/boot/{cmdline,config-editor,hmr,plugin-manager,plugin-market}/**": true,
+    "packages/bundle/{acp-app,sdk-app,sdk-minimal,web-app}/**": true,
+    "packages/core/{agent-default-model,agent-tool-presentation,tool-executor-native,tool-executor-ptc}/**": true,
+    "packages/llm/{deepseek-llm-api-extensions,llm-deepseek,llm-deepseek-account,llm-deepseek-api-key,llm-retry,plugin-package-inventory-deepseek,token-meter}/**": true,
+    "packages/preset/persona/**": true,
+
+    // Cordis is the only vendored framework needed for the first pass.
+    "vendor/{cosmokit,group,hmr,include,loader,logger-console,schemastery,timer}/**": true,
+
+    // Keep architecture, Cordis tutorial, and subsystem documentation.
+    "docs/{cookbook,cordis-api,defensive-patterns,i18n,persistence-changes,postmortem,upgrade-guide,user}/**": true,
+    "docs/{api-gateway,cli-help,config-catalog,deepseek-llm-api-wire-extensions,development,experimental-persistence-catalog,graph-atlas,persistence-catalog,rescope,session-format-status,testing,tool-catalog,ui-radius,web-styling}.*": true,
+    "docs/{dependency-catalog.json,persistence-schema.json}": true,
+
+    // Root files that describe contribution, release, and repository tooling.
+    "**/{AGENTS.md,CLAUDE.md}": true,
+    "{BENCHMARK.md,BRAND_GUIDELINES.md,CONTRIBUTING.md,LICENSE,Makefile,SAFETY.md,THIRD_PARTY_NOTICES.md,.editorconfig,.env,.gitattributes,.gitignore,.gitlab-ci.yml,.jscpd.json,.oxlintrc.json,.oxlintrc.staged.json,.rgignore,lefthook.yml,pnpm-lock.yaml,pytest.ini,vitest.bench.config.ts,vitest.config.ts,vitest.e2e.config.ts,vitest.expected.config.ts,vitest.shared.ts,vitest.snapshot.config.ts,vitest.web-stress.config.ts,vitest.web.config.ts,vitest.web.perf.config.ts}": true
+  }
+}

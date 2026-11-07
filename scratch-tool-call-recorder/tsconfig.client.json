@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.shared.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": [
+      "ES2024",
+      "DOM",
+      "DOM.Iterable"
+    ]
+  },
+  "include": [
+    "src/client/**/*.ts",
+    "src/client/**/*.tsx",
+    "src/css-modules.d.ts",
+    "src/types.ts",
+    "tests/*.client.spec.ts",
+    "tests/dashboard.client.spec.tsx"
+  ]
+}

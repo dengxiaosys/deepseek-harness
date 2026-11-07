@@ -1,0 +1,7 @@
+- insert:
+    - id: tool-call-recorder
+      name: dsh-tool-call-recorder
+      config:
+        outputDirectory: '/home/dengxiao.cs/code_repos/deepseek-harness/scratch-tool-call-recorder/records'
+    - id: tool-call-recorder-projection
+      name: dsh-tool-call-recorder/projection

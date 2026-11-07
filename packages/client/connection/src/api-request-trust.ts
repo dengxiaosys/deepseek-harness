@@ -140,24 +140,27 @@ export function isTrustedApiRequest(
     && !isBindAddressAuthority(hostUrl, bindHost)) return false
   // Cross-site fence: modern browsers label the initiator relationship on
   // every fetch; an explicit cross-site marker is refused regardless of Origin.
-  if (header(request.headers, 'sec-fetch-site') === 'cross-site') return false
+  const fetchSite = header(request.headers, 'sec-fetch-site')
+  if (fetchSite === 'cross-site') return false
   // Origin fence: when a browser attaches an Origin it must be exactly this
   // authority (compared through the same normalization as the Host). Absent
   // Origin is fine — the Host fence above already bound the request. The
   // literal "null" (sandboxed iframes, file: pages) is an opaque origin, refused.
   const origin = header(request.headers, 'origin')
   if (origin === undefined) return true
-  return isSameAuthorityOrigin(origin, host)
+  return isSameAuthorityOrigin(origin, host, fetchSite)
 }
 
 /**
- * Compare Host under the Origin's HTTP(S) scheme so default ports normalize
- * consistently. The transport may remain HTTP behind an HTTPS proxy.
+ * Compare Host under the Origin's HTTP(S) scheme. A browser-confirmed
+ * same-origin loopback request also tolerates a forwarding proxy dropping the
+ * non-default port from Origin; other authorities remain exact.
  * @param origin - verbatim Origin header value.
  * @param host - verbatim Host header value already accepted by the Host fence.
+ * @param fetchSite - browser relationship marker, when present.
  * @returns true only when the Origin is this listener's own `http(s)` authority.
  */
-function isSameAuthorityOrigin(origin: string, host: string): boolean {
+function isSameAuthorityOrigin(origin: string, host: string, fetchSite: string | undefined): boolean {
   let originUrl: URL
   try {
     originUrl = new URL(origin)
@@ -172,5 +175,11 @@ function isSameAuthorityOrigin(origin: string, host: string): boolean {
       : undefined
   if (scheme === undefined) return false
   const hostUrl = parseAuthority(host, scheme)
-  return hostUrl !== undefined && originUrl.host === hostUrl.host
+  if (hostUrl === undefined) return false
+  if (originUrl.host === hostUrl.host) return true
+  return fetchSite === 'same-origin'
+    && isLoopbackHostname(originUrl.hostname)
+    && originUrl.hostname === hostUrl.hostname
+    && originUrl.port === ''
+    && hostUrl.port !== ''
 }

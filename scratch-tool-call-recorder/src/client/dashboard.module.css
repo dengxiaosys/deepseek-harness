@@ -1,0 +1,260 @@
+.root {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding-bottom: calc(var(--dsh-composer-height, 152px) + 8px);
+  overflow: hidden;
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-xxs-12);
+}
+
+.scroll {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--dsw-font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+.scope,
+.updated {
+  margin: 4px 0 0;
+  color: var(--dsw-alias-label-secondary);
+  font: var(--dsw-font-xxs-12);
+}
+
+.updated {
+  flex: 0 0 auto;
+  margin-top: 0;
+  text-align: right;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l2);
+}
+
+.metric {
+  display: grid;
+  gap: 4px;
+  padding: 12px 16px;
+  border-right: 0.5px solid var(--dsw-alias-border-l1);
+}
+
+.metric:last-child {
+  border-right: 0;
+}
+
+.metricLabel {
+  color: var(--dsw-alias-label-secondary);
+}
+
+.metricValue,
+.successValue,
+.failureValue {
+  font-family: var(--dsw-font-family);
+  font-size: 16px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 24px;
+}
+
+.successValue,
+.successCell {
+  color: var(--dsw-alias-state-success-primary);
+}
+
+.failureValue,
+.failureCell {
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.loading,
+.empty {
+  display: flex;
+  height: 100%;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.loading svg {
+  animation: tool-call-recorder-spin 900ms linear infinite;
+}
+
+.empty {
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+.empty strong {
+  color: var(--dsw-alias-label-primary);
+  font-weight: 500;
+}
+
+.empty span {
+  max-width: 360px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border-bottom: 0.5px solid var(--dsw-alias-border-l1);
+  text-align: right;
+}
+
+.table th {
+  color: var(--dsw-alias-label-tertiary);
+  font-weight: 500;
+}
+
+.table th:first-child,
+.table td:first-child {
+  width: 36%;
+  text-align: left;
+}
+
+.toolCell {
+  min-width: 0;
+}
+
+.toolCell code {
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-xs-13);
+  overflow-wrap: anywhere;
+}
+
+.rateCell {
+  display: grid;
+  grid-template-columns: 36px minmax(48px, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.rateTrack {
+  display: block;
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  background: var(--dsw-alias-bg-layer-3);
+  border-radius: 999px;
+}
+
+.rateFill {
+  display: block;
+  height: 100%;
+  background: var(--dsw-alias-state-success-primary);
+  border-radius: inherit;
+}
+
+@media (hover: hover) {
+  .table tbody tr:hover {
+    background: var(--dsw-alias-interactive-bg-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading svg {
+    animation: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .scroll {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .updated {
+    text-align: left;
+  }
+
+  .metric {
+    padding: 10px 8px;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--dsw-alias-border-l2);
+  }
+
+  .table td,
+  .table td:first-child {
+    display: flex;
+    width: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 8px;
+    border: 0;
+    text-align: right;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    color: var(--dsw-alias-label-tertiary);
+  }
+
+  .toolCell,
+  .rateCell {
+    grid-column: 1 / -1;
+  }
+
+  .rateCell {
+    grid-template-columns: auto 36px minmax(48px, 1fr);
+  }
+}
+
+@keyframes tool-call-recorder-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
